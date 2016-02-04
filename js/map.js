@@ -1,7 +1,7 @@
 var map;
 
 function alertMax() {
-	Android.alert();
+	Android.alert("This is an alert.");
 }
 
 function initMap() {
