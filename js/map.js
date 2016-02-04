@@ -1,5 +1,9 @@
 var map;
 
+function alertMax() {
+	window.alert("Alerted!");
+}
+
 function initMap() {
 	var mapElement = document.getElementById('map');
 
@@ -13,5 +17,16 @@ function initMap() {
 		rotateControl: true
 	}
 
+	var styles = [
+		{
+			stylers: [
+		    	{ hue: "#33006f" },
+		    	{ saturation: -20 }
+		    ],
+		},
+
+	];
+
 	map = new google.maps.Map(mapElement, mapOptions);
+	map.setOptions({ styles: styles });
 }
