@@ -42,7 +42,7 @@ function centerCamera(locationData) {
 
 	var center = new google.maps.LatLng(centerLat, centerLng);
 	map.setCenter(center);
-	map.setZoom(2);
+	map.setZoom(15);
 }
 
 function initMap() {
