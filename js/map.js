@@ -1,46 +1,50 @@
 var map;
 var myLatLng;
 
-function alertMax(alertString) {
-	Android.alert(alertString);
+function centerCamera(locationData) {
+	var cumulativeLat = 0.0;
+	var cumulativeLng = 0.0;
+	var coordCount;
+
+	for(var i = 0; i < locationData.length; i++) {
+		var location = locationData[i];
+
+		var coords = location["coordinates"];
+
+		for(var j = 0; j < coords.length; j++) {
+			cumulativeLat += coords[j]["lat"];
+			cumulativeLng += coords[j]["lng"];
+			totalCoords++;
+		}
+
+		coordCount += coords.length;
+
+		var marker = new google.maps.Marker({
+	    position: coords[0],
+	    map: map,
+	    title: location["building"] + " " + location["room"]
+		});
+		marker.setMap(map);
+
+		var locationPoly = new google.maps.Polygon({
+			paths: coords,
+			strokeColor: '#FF0000',
+			strokeOpacity: 0.8,
+			strokeWeight: 3,
+			fillColor: '#FF000',
+			fillOpacity: 0.35
+		});
+		locationPoly.setMap
+	}
+
+	var centerLat = cumulativeLat / coordCount;
+	var centerLng = cumulativeLng / coordCount;
+
+	var center = new google.maps.LatLng(centerLat, centerLng);
+	map.setCenter(center);
+	map.setZoom(2);
 }
-//function test(){
-//var center = new google.maps.LatLng(47.24573265, -122.4372974, 18);
-//map.setCenter(center);
-//map.setZoom(zoom: 19);
-//}
-function centerCamera(targetName, targetLat, targetLng, zoomLevel) {
-var center = new google.maps.LatLng(targetLat, targetLng);
-map.setCenter(center);
-map.setZoom(zoomLevel);
-  var marker = new google.maps.Marker({
-    position: {lat: targetLat, lng: targetLng},
-    map: map,
-    title: targetName
-  });
 
-
-  var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Description</h1>'+
-      '<div id="bodyContent">'+
-      '<p>this is the description for .</p>'+ targetName +
-      '<img src="file:///android_asset/common/bb107.png" alt=targetName height="128" width="128"</img>'+
-      '</div>'+
-      '</div>';
-
-  var infoWindow = new google.maps.InfoWindow({
-    content: contentString
-  });
-    marker.addListener('click', function() {
-      infoWindow.open(map, marker);
-    });
-  marker.setMap(map);
-
-
-//add listener to marker
-}
 function initMap() {
 	var mapElement = document.getElementById('map');
 
