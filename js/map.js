@@ -7,12 +7,11 @@ function getCentroid(polygonCoords) {
 
 var lastMarkersAndPolys = [];
 
-function centerCamera(locationDataString) {
-	for(int i = 0; i < lastMarkersAndPolys.length; i++) {
+function centerCamera(locationData) {
+	for(var i = 0; i < lastMarkersAndPolys.length; i++) {
 		lastMarkersAndPolys[i].setMap(null);
 	}
-
-	locationData = locationDataString; //JSON.parse(locationDataString);
+	lastMarkersAndPolys = [];
 
 	var cumulativeLat = 0.0;
 	var cumulativeLng = 0.0;
@@ -49,7 +48,7 @@ function centerCamera(locationDataString) {
 		});
 		locationPoly.setMap(map);
 
-		lastMarkersAndPolys.push(poly);
+		lastMarkersAndPolys.push(locationPoly);
 	}
 
 	var centerLat = cumulativeLat / coordCount;
