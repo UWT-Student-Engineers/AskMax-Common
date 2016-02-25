@@ -20,7 +20,7 @@ function centerCamera(locationDataString) {
 		for(var j = 0; j < coords.length; j++) {
 			cumulativeLat += coords[j]["lat"];
 			cumulativeLng += coords[j]["lng"];
-			totalCoords++;
+			coordCount++;
 		}
 
 		coordCount += coords.length;
