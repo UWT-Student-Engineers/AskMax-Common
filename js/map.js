@@ -1,7 +1,13 @@
 var map;
 var myLatLng;
 
-function centerCamera(locationData) {
+function getCentroid(polygonCoords) {
+
+}
+
+function centerCamera(locationDataString) {
+	locationData = JSON.parse(locationDataString);
+
 	var cumulativeLat = 0.0;
 	var cumulativeLng = 0.0;
 	var coordCount;
