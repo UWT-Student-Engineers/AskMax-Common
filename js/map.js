@@ -34,7 +34,7 @@ function centerCamera(locationData) {
 			fillColor: '#FF0000',
 			fillOpacity: 0.35
 		});
-		locationPoly.setMap
+		locationPoly.setMap(map);
 	}
 
 	var centerLat = cumulativeLat / coordCount;
