@@ -5,12 +5,18 @@ function getCentroid(polygonCoords) {
 
 }
 
+var lastMarkersAndPolys = [];
+
 function centerCamera(locationDataString) {
-	locationData = JSON.parse(locationDataString);
+	for(int i = 0; i < lastMarkersAndPolys.length; i++) {
+		lastMarkersAndPolys[i].setMap(null);
+	}
+
+	locationData = locationDataString; //JSON.parse(locationDataString);
 
 	var cumulativeLat = 0.0;
 	var cumulativeLng = 0.0;
-	var coordCount;
+	var coordCount = 0;
 
 	for(var i = 0; i < locationData.length; i++) {
 		var location = locationData[i];
@@ -20,7 +26,6 @@ function centerCamera(locationDataString) {
 		for(var j = 0; j < coords.length; j++) {
 			cumulativeLat += coords[j]["lat"];
 			cumulativeLng += coords[j]["lng"];
-			coordCount++;
 		}
 
 		coordCount += coords.length;
@@ -32,6 +37,8 @@ function centerCamera(locationDataString) {
 		});
 		marker.setMap(map);
 
+		lastMarkersAndPolys.push(marker);
+
 		var locationPoly = new google.maps.Polygon({
 			paths: coords,
 			strokeColor: '#FF0000',
@@ -41,6 +48,8 @@ function centerCamera(locationDataString) {
 			fillOpacity: 0.35
 		});
 		locationPoly.setMap(map);
+
+		lastMarkersAndPolys.push(poly);
 	}
 
 	var centerLat = cumulativeLat / coordCount;
