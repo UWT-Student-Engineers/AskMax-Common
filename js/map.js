@@ -11,6 +11,7 @@ function centerCamera(locationData) {
 	if(locationData.length == 0) {
 		map.setCenter({lat: 47.2445799, lng: -122.4376184});
 		map.setZoom(12);
+		return;
 	}
 
 	for(var i = 0; i < lastMarkersAndPolys.length; i++) {
