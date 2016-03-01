@@ -2,9 +2,9 @@ var map;
 var myLatLng;
 
 function getCentroid(polygonCoords) {
-	area = 0.0;
+	var area = 0.0;
 	for(var i = 0; i < polygonCoords.length; i++) {
-		var j = ( i < polygonCoords.length ? i + 1, 0 );
+		var j = ( i < polygonCoords.length ? i + 1 : 0 );
 
 		area += polygonCoords[i].lat * polygonCoords[j].lng -
 			polygonCoords[j].lat * polygonCoords[i].lng;
@@ -13,7 +13,7 @@ function getCentroid(polygonCoords) {
 
 	var cx = 0.0;
 	for(var i = 0; i < polygonCoords.length; i++) {
-		var j = ( i < polygonCoords.length ? i + 1, 0 );
+		var j = ( i < polygonCoords.length ? i + 1 : 0 );
 
 		cx += (polygonCoords[i].lat + polygonCoords[j].lat) *
 			(polygonCoords[i].lat * polygonCoords[j].lng -
@@ -23,7 +23,7 @@ function getCentroid(polygonCoords) {
 
 	var cy = 0.0;
 	for(var i = 0; i < polygonCoords.length; i++) {
-		var j = ( i < polygonCoords.length ? i + 1, 0 );
+		var j = ( i < polygonCoords.length ? i + 1 : 0 );
 
 		cy += (polygonCoords[i].lng + polygonCoords[j].lng) *
 			(polygonCoords[i].lat * polygonCoords[j].lng -
