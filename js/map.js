@@ -2,7 +2,36 @@ var map;
 var myLatLng;
 
 function getCentroid(polygonCoords) {
+	area = 0.0;
+	for(var i = 0; i < polygonCoords.length; i++) {
+		var j = ( i < polygonCoords.length ? i + 1, 0 );
 
+		area += polygonCoords[i].lat * polygonCoords[j].lng -
+			polygonCoords[j].lat * polygonCoords[i].lng;
+	}
+	area = 0.5 * area;
+
+	var cx = 0.0;
+	for(var i = 0; i < polygonCoords.length; i++) {
+		var j = ( i < polygonCoords.length ? i + 1, 0 );
+
+		cx += (polygonCoords[i].lat + polygonCoords[j].lat) *
+			(polygonCoords[i].lat * polygonCoords[j].lng -
+			 polygonCoords[j].lat * polygonCoords[i].lng);
+	}
+	cx = cx / (6.0 * area);
+
+	var cy = 0.0;
+	for(var i = 0; i < polygonCoords.length; i++) {
+		var j = ( i < polygonCoords.length ? i + 1, 0 );
+
+		cy += (polygonCoords[i].lng + polygonCoords[j].lng) *
+			(polygonCoords[i].lat * polygonCoords[j].lng -
+			 polygonCoords[j].lat * polygonCoords[i].lng);
+	}
+	cy = cy / (6.0 * area);
+
+	return {lat: cx, lng: cy};
 }
 
 var lastMarkersAndPolys = [];
@@ -30,7 +59,7 @@ function centerCamera(locationData) {
 		coordCount += coords.length;
 
 		var marker = new google.maps.Marker({
-	    position: coords[0],
+	    position: getCentroid(coords),
 	    map: map,
 	    title: location["building"] + " " + location["room"]
 		});
