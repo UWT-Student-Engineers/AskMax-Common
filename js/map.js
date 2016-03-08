@@ -37,16 +37,16 @@ function getCentroid(polygonCoords) {
 var lastMarkersAndPolys = [];
 
 function centerCamera(locationData) {
+	for(var i = 0; i < lastMarkersAndPolys.length; i++) {
+		lastMarkersAndPolys[i].setMap(null);
+	}
+	lastMarkersAndPolys = [];
+
 	if(locationData.length == 0) {
 		map.setCenter({lat: 47.2445799, lng: -122.4376184});
 		map.setZoom(12);
 		return;
 	}
-
-	for(var i = 0; i < lastMarkersAndPolys.length; i++) {
-		lastMarkersAndPolys[i].setMap(null);
-	}
-	lastMarkersAndPolys = [];
 
 	var cumulativeLat = 0.0;
 	var cumulativeLng = 0.0;
