@@ -1,0 +1,15 @@
+{
+  "id": "key",
+  "title": "Keystone",
+  "description": "This is a building, blah blah blah. Hahahahahaha.",
+  "tags": [
+    "key",
+    "keystone"
+  ],
+  "coordinates": [
+    { "lat": 47.24555967, "lng": -122.43781976 },
+    { "lat": 47.24555375, "lng": -122.43777987 },
+    { "lat": 47.24517274, "lng": -122.43769873 },
+    { "lat": 47.24519049, "lng": -122.43794885 }
+  ]
+}
