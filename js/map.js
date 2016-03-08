@@ -54,7 +54,7 @@ function centerCamera(locationData) {
 
 	if(locationData.length == 0) {
 		map.setCenter({lat: 47.2445799, lng: -122.4376184});
-		map.setZoom(12);
+		map.setZoom(17.5);
 		return;
 	}
 
@@ -72,6 +72,10 @@ function centerCamera(locationData) {
 			cumulativeLng += coords[j]["lng"];
 		}
 
+		var onLocClick = function() {
+			AskMaxAndroid.displayInfo(location);
+		}
+
 		coordCount += coords.length;
 
 		var marker = new google.maps.Marker({
@@ -81,6 +85,7 @@ function centerCamera(locationData) {
 		});
 		marker.setMap(map);
 
+		marker.addListener('click', onLocClick);
 		lastMarkersAndPolys.push(marker);
 
 		var locationPoly = new google.maps.Polygon({
@@ -93,6 +98,7 @@ function centerCamera(locationData) {
 		});
 		locationPoly.setMap(map);
 
+		locationPoly.addListener('click', onLocClick);
 		lastMarkersAndPolys.push(locationPoly);
 	}
 
@@ -101,7 +107,7 @@ function centerCamera(locationData) {
 
 	var center = new google.maps.LatLng(centerLat, centerLng);
 	map.setCenter(center);
-	map.setZoom(15);
+	map.setZoom(17.5);
 }
 
 function initMap() {
@@ -109,7 +115,7 @@ function initMap() {
 
 	var mapOptions = {
 		center: {lat: 47.2445799, lng: -122.4376184},
-		zoom: 17,
+		zoom: 17.5,
 
 		disableDefaultUI: true,
 		zoomControl: true,
