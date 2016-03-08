@@ -82,6 +82,7 @@ function centerCamera(locationData) {
 	    position: getCentroid(coords),
 	    map: map,
 	    title: location["building"] + " " + location["room"]
+	    draggable: true
 		});
 		marker.setMap(map);
 
