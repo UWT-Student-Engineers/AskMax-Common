@@ -54,7 +54,7 @@ function centerCamera(locationData) {
 
 	if(locationData.length == 0) {
 		map.setCenter({lat: 47.2445799, lng: -122.4376184});
-		map.setZoom(17.5);
+		map.setZoom(17);
 		return;
 	}
 
@@ -99,7 +99,6 @@ function centerCamera(locationData) {
 		});
 		locationPoly.setMap(map);
 
-		locationPoly.addListener('click', onLocClick);
 		lastMarkersAndPolys.push(locationPoly);
 	}
 
@@ -108,7 +107,7 @@ function centerCamera(locationData) {
 
 	var center = new google.maps.LatLng(centerLat, centerLng);
 	map.setCenter(center);
-	map.setZoom(17.5);
+	map.setZoom(17);
 }
 
 function initMap() {
@@ -116,7 +115,7 @@ function initMap() {
 
 	var mapOptions = {
 		center: {lat: 47.2445799, lng: -122.4376184},
-		zoom: 17.5,
+		zoom: 17,
 
 		disableDefaultUI: true,
 		zoomControl: true,
