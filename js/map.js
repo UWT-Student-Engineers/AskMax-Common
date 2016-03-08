@@ -2,7 +2,17 @@ var map;
 var myLatLng;
 
 function getCentroid(polygonCoords) {
-	var area = 0.0;
+	var cx = 0.0;
+	var cy = 0.0;
+
+	for(var i = 0; i < polygonCoords.length; i++) {
+		cx += polygonCoords[i].lat;
+		cy += polygonCoords[i].lng;
+	}
+
+	return {lat: cx/polygonCoords.length, lng: cy/polygonCoords.length};
+
+	/*var area = 0.0;
 	for(var i = 0; i < polygonCoords.length; i++) {
 		var j = ( i < polygonCoords.length - 1 ? i + 1 : 0 );
 
@@ -31,7 +41,7 @@ function getCentroid(polygonCoords) {
 	}
 	cy = cy / (6.0 * area);
 
-	return {lat: cx, lng: cy};
+	return {lat: cx, lng: cy};*/
 }
 
 var lastMarkersAndPolys = [];
