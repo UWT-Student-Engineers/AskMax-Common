@@ -1,0 +1,16 @@
+{
+  "id": "wg",
+  "title": "Walsh Gardner",
+  "description": "This is a building, blah blah blah. Hahahahahaha.",
+  "tags": [
+    "wg",
+    "walsh",
+    "gardner"
+  ],
+  "coordinates": [
+    { "lat": 47.24472481, "lng": -122.43731685 },
+    { "lat": 47.24476669, "lng": -122.43682299 },
+    { "lat": 47.24463831, "lng": -122.43679482 },
+    { "lat": 47.24459234, "lng": -122.43728969 }
+  ]
+}
