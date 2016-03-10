@@ -84,6 +84,7 @@ function centerCamera(locationData) {
 	    title: location["title"],
 			labelContent: location["title"],
 			labelClass: "location-labels",
+			labelAnchor: new google.maps.Point(22, 0),
 	    draggable: true
 		});
 		marker.setMap(map);
