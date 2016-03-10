@@ -1,6 +1,23 @@
 var map;
 var myLatLng;
 
+// The host application
+var AskMax;
+
+function determineHost() {
+	if(typeof AskMaxAndroid === undefined ) { // If we're on iOS
+		function iosPost(funcName, json){
+			window.webkit.messageHandlers[funcName].postMessage(json);
+		}
+
+		AskMax = {
+			displayInfo: function(json) {return iosPost("displayInfo", json); }
+		}
+	} else { // Otherwise we're on Android
+		AskMax = AskMaxAndroid;
+	}
+}
+
 function getCentroid(polygonCoords) {
 	var cx = 0.0;
 	var cy = 0.0;
@@ -114,6 +131,8 @@ function centerCamera(locationData) {
 }
 
 function initMap() {
+	determineHost();
+
 	var mapElement = document.getElementById('map');
 
 	var mapOptions = {
