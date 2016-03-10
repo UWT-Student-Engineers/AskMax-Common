@@ -10,8 +10,15 @@ function determineHost() {
 			window.webkit.messageHandlers[funcName].postMessage(json);
 		}
 
-		AskMax = {
-			displayInfo: function(json) {return iosPost("displayInfo", json); }
+		AskMax = {}
+
+		var functionsToBind = ["displayInfo", "nothing"];
+		for(var i = 0; i < functionsToBind.length; i++) {
+			var funcName = functionsToBind[i];
+
+			AskMax[funcName] = function(json) {
+				return iosPost(funcName, json);
+			}
 		}
 	} else { // Otherwise we're on Android
 		AskMax = AskMaxAndroid;
