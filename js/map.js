@@ -73,7 +73,7 @@ function centerCamera(locationData) {
 		}
 
 		var onLocClick = function() {
-			AskMaxAndroid.displayInfo(location);
+			AskMaxAndroid.displayInfo(JSON.stringify(location));
 		}
 
 		coordCount += coords.length;
