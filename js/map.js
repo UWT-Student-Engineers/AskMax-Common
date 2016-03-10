@@ -78,10 +78,12 @@ function centerCamera(locationData) {
 
 		coordCount += coords.length;
 
-		var marker = new google.maps.Marker({
+		var marker = new MarkerWithLabel({
 	    position: getCentroid(coords),
 	    map: map,
-	    title: location["building"] + " " + location["room"],
+	    title: location["title"],
+			labelContent: location["title"],
+			labelClass: "location-labels",
 	    draggable: true
 		});
 		marker.setMap(map);
