@@ -3,7 +3,6 @@
   "title": "Carlton Center",
   "description": "Previously Carlton Hotel, named after owner Anton Huth's son.",
   "url": "https://www.tacoma.uw.edu/campus-map/carlton-center-car",
-  "img": "car_main",
   "tags": [
     "car",
     "cc",
@@ -15,8 +14,5 @@
     { "lat": 47.24748244, "lng": -122.43816108 },
     { "lat": 47.24721524, "lng": -122.43827239 },
     { "lat": 47.24718292, "lng": -122.43854329 }
-  ],
-  "rooms": [
-    "200", "400", "404"
   ]
 }
