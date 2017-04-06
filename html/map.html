@@ -1,17 +1,197 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<link rel="stylesheet" type="text/css" href="../css/map_style.css"/>
-	</head>
+<head>
+<script
+src="http://maps.googleapis.com/maps/api/js">
+</script>
 
-	<body>
-		<div id="map"></div>
+<script>
+/*
+ * Node Data structure. Represents key locations, i.e., a building or path
+ * intersection.
+ */
+var Node = {
+	identifier : "ident",  /* Node identifier, could be "BB", "WCG", "CP" */
+	loc : null,
+	connected : [],
+	prev : null
+};
 
-		<script type="text/javascript" src="../js/map.js"></script>
+/*
+ * Connect two separate nodes with each other.
+ */
+function connectNodes(A, B) {
+	A.connected.push(B);
+	B.connected.push(A);
+}
 
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVdrCqAqj4QXMF3lHlsI0Pa2PlcrRlGgU&callback=initMap">
-		</script>
-		<script src="../js/markerwithlabel_packed.js"></script>
-	</body>
+/*
+ * Breadth First Search to find path through nodes.
+ */
+function bfs(start, destination) {
+	var queue = [];
+	queue.push(start);
+	var visited = [];
+
+	while (queue.length > 0) {
+		var n = queue[0];										// Dequeue Node.
+		queue = queue.splice(1, queue.length);
+		visited.push(n);
+
+		console.log("DEQUEUE: " + n.identifier);
+		console.log("Destination: " + destination.identifier);
+	
+		/* Check to see if this node is our destination. */
+		if (n.identifier === destination.identifier) { // Goal hit, stop.
+			console.log("FOUND");
+			return;
+		} else {
+			console.log("Keep looking");
+		}
+		console.log("connections = " + n.connected.length);
+		/* Enqueue all the nodes that are connected to current node. */
+
+		for (var i = 0; i < n.connected.length; i++) {
+			console.log("ENQUEUEING FROM: " + n.identifier);
+
+			if (visited.indexOf(n.connected[i]) == -1) { // have not enqueued this node yet.
+				n.connected[i].prev = n;
+				queue.push(n.connected[i]);
+			}
+		}
+	}
+}
+
+/* Prepare all the nodes... should create a function for this and pass in all the
+ * information of the nodes. */
+function prepareNodes(theNode) {
+	var startNode = new Object();
+	startNode.identifier = "START";
+	startNode.loc = new google.maps.LatLng(47.24491904854539, -122.43891998915586)
+	startNode.prev = null;
+	startNode.connected = [];
+
+	var nodeB = new Object();
+	nodeB.identifier = "B";
+	nodeB.loc = new google.maps.LatLng(47.24493133934986, -122.43874765722666);
+	nodeB.prev = null;
+	nodeB.connected = [];
+
+	var nodeC = new Object();
+	nodeC.identifier = "C";
+	nodeC.loc = new google.maps.LatLng(47.24499597983022, -122.43816762952719);
+	nodeC.prev = null;
+	nodeC.connected = [];
+
+	var nodeD = new Object();
+	nodeD.identifier = "D";
+	nodeD.loc = new google.maps.LatLng(47.24506335151453, -122.4375299343339);
+	nodeD.prev = null;
+	nodeD.connected = [];
+
+	var nodeE = new Object();
+	nodeE.identifier = "E";
+	nodeE.loc = new google.maps.LatLng(47.24517214749948, -122.43755273311058);
+	nodeE.prev = null;
+	nodeE.connected = [];
+
+	var nodeF = new Object();
+	nodeF.identifier = "F";
+	nodeF.loc = new google.maps.LatLng(47.2455923073019, -122.43799328594127);
+	nodeF.prev = null;
+	nodeF.connected = [];
+
+	var nodeG = new Object();
+	nodeG.identifier = "G";
+	nodeG.loc = new google.maps.LatLng(47.24617679275204, -122.43777468590656);
+	nodeG.prev = null;
+	nodeG.connected = [];
+
+	var nodeH = new Object();
+	nodeH.identifier = "H";
+	nodeH.loc = new google.maps.LatLng(47.244552599175634, -122.43742331652561);
+	nodeH.prev = null;
+	nodeH.connected = [];
+
+	connectNodes(startNode, nodeB);
+	connectNodes(nodeB, nodeC);
+	connectNodes(nodeC, nodeD);
+	connectNodes(nodeC, nodeF);
+	connectNodes(nodeD, nodeE);
+	connectNodes(nodeD, nodeH);
+	connectNodes(nodeE, nodeG);
+	connectNodes(nodeF, nodeG);
+
+
+	destNode = nodeB;		/** CHANGE DEST NODE TO CHANGE PATH. **/
+
+	return startNode;
+}
+
+// Create a user's "Start Location"
+var destNode;
+var startNode = prepareNodes(destNode);			// Create start node.
+startNode.prev = null;
+
+bfs(startNode, destNode);						// Find the path.
+
+var myCenter = startNode.loc;					// Center the map.
+function initialize() {
+	var mapProp = {
+	  center:myCenter,
+	  zoom:19,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+
+	var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+	/* Destination marker, should be placed at the user's destination. */
+	var marker = new google.maps.Marker({
+	  position:destNode.loc,
+	});
+	marker.setMap(map);
+
+	/* Line used to be drawn between two nodes. */
+	var lineSymbol = {
+	    path: 'M 0,-1 0,1',
+	    strokeOpacity: 1,
+	    strokeColor: '#AA0000',
+	    scale: 4
+	};
+
+	/* Circle should be drawn on the user's current location */
+	var circle = new google.maps.Circle({
+	  map: map,
+	  radius: 2,    
+	  fillColor: '#AA0000',
+	  center : startNode.loc 
+	});
+
+	/* Perform the actual drawing on the map. */
+	currNode = destNode;
+	while (currNode) {
+		if (currNode.prev) {
+			var line = new google.maps.Polyline({
+				path: [currNode.loc, currNode.prev.loc],
+				strokeOpacity: 0,
+				icons: [{
+				  icon: lineSymbol,
+				  offset: '0',
+				  repeat: '20px'
+				}],
+				map: map
+			});
+		}
+		currNode = currNode.prev;
+	}
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:500px;height:380px;"></div>
+</body>
 </html>
